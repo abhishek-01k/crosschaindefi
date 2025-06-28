@@ -1,7 +1,11 @@
 'use client'
 
-import { toast } from 'react-hot-toast'
+import * as React from 'react'
 
 export function Toaster() {
-  return null // react-hot-toast renders its own toaster
+  return (
+    <div className="fixed bottom-0 right-0 z-50 w-full max-w-sm p-4 space-y-4 pointer-events-none">
+      {/* Toast notifications will be rendered here */}
+    </div>
+  )
 } 

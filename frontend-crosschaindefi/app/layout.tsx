@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import * as React from "react"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
@@ -9,7 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Web3Provider } from "@/components/web3-provider"
 import { Toaster } from "@/components/ui/toaster"
 
-import "./globals.css"
+import "@/styles/globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -72,32 +73,30 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <>
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body
-          className={cn(
-            "min-h-screen bg-background font-sans antialiased",
-            inter.className
-          )}
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          inter.className
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
         >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Web3Provider>
-              <div className="relative flex min-h-screen flex-col">
-                <SiteHeader />
-                <main className="flex-1">{children}</main>
-              </div>
-              <TailwindIndicator />
-              <Toaster />
-            </Web3Provider>
-          </ThemeProvider>
-        </body>
-      </html>
-    </>
+          <Web3Provider>
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+            </div>
+            <TailwindIndicator />
+            <Toaster />
+          </Web3Provider>
+        </ThemeProvider>
+      </body>
+    </html>
   )
 }

@@ -4,11 +4,10 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { HeroSection } from "@/components/hero-section"
-import { FeaturesSection } from "@/components/features-section"
-import { AgentsSection } from "@/components/agents-section"
 import { StatsSection } from "@/components/stats-section"
-import { TradingSection } from "@/components/trading-section"
-import { PredictionMarketsSection } from "@/components/prediction-markets-section"
+import { FeaturesSection } from "@/components/features-section"
+import { LendingSection } from "@/components/lending-section"
+import { BorrowingSection } from "@/components/borrowing-section"
 import { CrossChainSection } from "@/components/cross-chain-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
 import { PartnersSection } from "@/components/partners-section"
@@ -20,9 +19,8 @@ export default function IndexPage() {
       <HeroSection />
       <StatsSection />
       <FeaturesSection />
-      <AgentsSection />
-      <TradingSection />
-      <PredictionMarketsSection />
+      <LendingSection />
+      <BorrowingSection />
       <CrossChainSection />
       <TestimonialsSection />
       <PartnersSection />

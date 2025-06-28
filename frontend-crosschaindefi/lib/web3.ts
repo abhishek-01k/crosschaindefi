@@ -1,9 +1,9 @@
 import { createConfig, http } from 'wagmi'
 import { mainnet, polygon, arbitrum, optimism, base, avalanche, bsc } from 'wagmi/chains'
-import { injected, metaMask, walletConnect, coinbaseWallet, safe } from 'wagmi/connectors'
+import { injected, metaMask, walletConnect, coinbaseWallet } from 'wagmi/connectors'
 import { createPublicClient } from 'viem'
 
-// Chain configurations for CrossChainDefi
+// Supported chains for CrossChainDefi
 export const supportedChains = [
   mainnet,
   polygon, 
@@ -14,25 +14,22 @@ export const supportedChains = [
   bsc,
 ] as const
 
-// Connector configurations
+// Get WalletConnect project ID from environment
 const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
 
 if (!projectId) {
   console.warn('NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID is not set')
 }
 
+// Configure connectors
 const connectors = [
   injected(),
   metaMask(),
   ...(projectId ? [walletConnect({ projectId })] : []),
-  coinbaseWallet({
-    appName: 'CrossChainDefi',
-    appLogoUrl: 'https://crosschaindefi.com/logo.png',
-  }),
-  safe(),
+  coinbaseWallet({ appName: 'CrossChainDefi' }),
 ]
 
-// Create the main Wagmi config
+// Create Wagmi config
 export const config = createConfig({
   chains: supportedChains,
   connectors,
@@ -47,6 +44,61 @@ export const config = createConfig({
   },
   ssr: true,
 })
+
+// Chain configurations for easy access
+export const chainConfigs = {
+  [mainnet.id]: {
+    name: 'Ethereum',
+    logo: '⟠',
+    color: 'bg-blue-500',
+    explorer: 'https://etherscan.io',
+  },
+  [polygon.id]: {
+    name: 'Polygon',
+    logo: '⬟',
+    color: 'bg-purple-500',
+    explorer: 'https://polygonscan.com',
+  },
+  [arbitrum.id]: {
+    name: 'Arbitrum',
+    logo: '◆',
+    color: 'bg-cyan-500',
+    explorer: 'https://arbiscan.io',
+  },
+  [optimism.id]: {
+    name: 'Optimism',
+    logo: '🔴',
+    color: 'bg-red-500',
+    explorer: 'https://optimistic.etherscan.io',
+  },
+  [base.id]: {
+    name: 'Base',
+    logo: '🔵',
+    color: 'bg-blue-600',
+    explorer: 'https://basescan.org',
+  },
+  [avalanche.id]: {
+    name: 'Avalanche',
+    logo: '🔺',
+    color: 'bg-red-600',
+    explorer: 'https://snowtrace.io',
+  },
+  [bsc.id]: {
+    name: 'BSC',
+    logo: '🟡',
+    color: 'bg-yellow-500',
+    explorer: 'https://bscscan.com',
+  },
+} as const
+
+// Helper functions
+export function getChainConfig(chainId: number) {
+  return chainConfigs[chainId as keyof typeof chainConfigs]
+}
+
+export function isChainSupported(chainId: number) {
+  return chainId in chainConfigs
+}
 
 // Public clients for each chain
 export const publicClients = {

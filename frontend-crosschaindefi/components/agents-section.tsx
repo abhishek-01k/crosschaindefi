@@ -5,7 +5,7 @@ import {
   Bot, 
   Brain, 
   Shuffle, 
-  Cog, 
+  Cog,
   Activity, 
   TrendingUp, 
   DollarSign,
