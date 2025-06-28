@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig
 export const siteConfig = {
   name: "CrossChainDefi",
   description:
-    "Next-Generation Cross-Chain DeFi Platform powered by AI Agents, Chainlink services, and advanced prediction markets. Trade, arbitrage, and earn across multiple blockchains with autonomous AI assistance.",
+    "The premier cross-chain DeFi lending and borrowing platform. Earn competitive yields and access liquidity across 8+ blockchain networks with Chainlink-powered security.",
   tagline: "The Future of Cross-Chain DeFi",
   version: "1.0.0",
   mainNav: [
@@ -12,24 +12,20 @@ export const siteConfig = {
       href: "/dashboard",
     },
     {
-      title: "Cross-Chain Bridge",
-      href: "/bridge",
+      title: "Lending",
+      href: "/lending",
     },
     {
-      title: "Prediction Markets",
-      href: "/markets",
+      title: "Borrowing", 
+      href: "/borrowing",
     },
     {
-      title: "AI Agents",
-      href: "/agents",
+      title: "Portfolio",
+      href: "/portfolio",
     },
     {
       title: "Analytics",
       href: "/analytics",
-    },
-    {
-      title: "Liquidity",
-      href: "/liquidity",
     },
   ],
   features: [
@@ -129,7 +125,7 @@ export const siteConfig = {
   links: {
     twitter: "https://twitter.com/crosschaindefi",
     discord: "https://discord.gg/crosschaindefi",
-    github: "https://github.com/crosschaindefi/platform",
+    github: "https://github.com/crosschaindefi",
     docs: "https://docs.crosschaindefi.com",
     blog: "https://blog.crosschaindefi.com",
     telegram: "https://t.me/crosschaindefi",
