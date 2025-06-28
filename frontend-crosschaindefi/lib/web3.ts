@@ -2,11 +2,12 @@ import { createConfig, http } from 'wagmi'
 import { mainnet, polygon, arbitrum, optimism, base, avalanche, bsc } from 'wagmi/chains'
 import { injected, metaMask, walletConnect, coinbaseWallet } from 'wagmi/connectors'
 import { createPublicClient } from 'viem'
+import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 
 // Supported chains for CrossChainDefi
 export const supportedChains = [
   mainnet,
-  polygon, 
+  polygon,
   arbitrum,
   optimism,
   base,
@@ -21,29 +22,13 @@ if (!projectId) {
   console.warn('NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID is not set')
 }
 
-// Configure connectors
-const connectors = [
-  injected(),
-  metaMask(),
-  ...(projectId ? [walletConnect({ projectId })] : []),
-  coinbaseWallet({ appName: 'CrossChainDefi' }),
-]
-
 // Create Wagmi config
-export const config = createConfig({
-  chains: supportedChains,
-  connectors,
-  transports: {
-    [mainnet.id]: http(process.env.NEXT_PUBLIC_ETHEREUM_RPC_URL),
-    [polygon.id]: http(process.env.NEXT_PUBLIC_POLYGON_RPC_URL),
-    [arbitrum.id]: http(process.env.NEXT_PUBLIC_ARBITRUM_RPC_URL),
-    [optimism.id]: http(process.env.NEXT_PUBLIC_OPTIMISM_RPC_URL),
-    [base.id]: http(process.env.NEXT_PUBLIC_BASE_RPC_URL),
-    [avalanche.id]: http(process.env.NEXT_PUBLIC_AVALANCHE_RPC_URL),
-    [bsc.id]: http(process.env.NEXT_PUBLIC_BSC_RPC_URL),
-  },
+export const wagmiConfig = getDefaultConfig({
+  appName: 'My RainbowKit App',
+  projectId: projectId ?? '',
+  chains: [mainnet, polygon, optimism, arbitrum, base],
   ssr: true,
-})
+});
 
 // Chain configurations for easy access
 export const chainConfigs = {
@@ -238,9 +223,3 @@ export const tokenAddresses = {
 
 export type SupportedChainId = typeof supportedChains[number]['id']
 export type TokenSymbol = keyof typeof tokenAddresses[SupportedChainId]
-
-declare module 'wagmi' {
-  interface Register {
-    config: typeof config
-  }
-} 

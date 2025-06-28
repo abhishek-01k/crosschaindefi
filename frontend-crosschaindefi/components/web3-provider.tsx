@@ -3,7 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { RainbowKitProvider, getDefaultConfig, darkTheme } from '@rainbow-me/rainbowkit'
-import { config } from '@/lib/web3'
+import { wagmiConfig } from '@/lib/web3'
 
 import '@rainbow-me/rainbowkit/styles.css'
 
@@ -24,7 +24,7 @@ interface Web3ProviderProps {
 
 export function Web3Provider({ children }: Web3ProviderProps) {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           theme={darkTheme({
@@ -36,9 +36,7 @@ export function Web3Provider({ children }: Web3ProviderProps) {
           })}
           appInfo={{
             appName: 'CrossChainDefi',
-            appDescription: 'Next-Generation Cross-Chain DeFi Platform',
-            appUrl: 'https://crosschaindefi.com',
-            appIcon: '/favicon.ico',
+
           }}
         >
           {children}
