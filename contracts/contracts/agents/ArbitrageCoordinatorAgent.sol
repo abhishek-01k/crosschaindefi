@@ -107,7 +107,7 @@ contract ArbitrageCoordinatorAgent is
     // Chainlink configuration
     LinkTokenInterface public immutable linkToken;
     VRFCoordinatorV2Interface public immutable vrfCoordinator;
-    uint64 public immutable subscriptionId;
+    uint256 public immutable subscriptionId;
     bytes32 public immutable keyHash;
     bytes32 public immutable donId;
 
@@ -221,7 +221,7 @@ contract ArbitrageCoordinatorAgent is
         address _linkToken,
         address _functionsRouter,
         address _vrfCoordinator,
-        uint64 _subscriptionId,
+        uint256 _subscriptionId,
         bytes32 _keyHash,
         bytes32 _donId,
         address _hubContract
@@ -582,7 +582,7 @@ contract ArbitrageCoordinatorAgent is
         args[1] = _bytes32ToString(opportunityId);
         req.setArgs(args);
 
-        _sendRequest(req.encodeCBOR(), subscriptionId, 300000, donId);
+        _sendRequest(req.encodeCBOR(), uint64(subscriptionId), 300000, donId);
     }
 
     function _applyRandomizedStrategy(uint256 randomness) internal {

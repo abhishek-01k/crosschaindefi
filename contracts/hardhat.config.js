@@ -132,7 +132,7 @@ module.exports = {
     },
     // Avalanche Networks
     avalanche: {
-      url: "https://api.avax.network/ext/bc/C/rpc",
+      url: "https://rpc.owlracle.info/avax/70d38ce1826c4a60bb2a8e05a6c8b20f",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       chainId: 43114,
       gasPrice: "auto",
@@ -141,7 +141,6 @@ module.exports = {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       chainId: 43113,
-      gasPrice: "auto",
     },
     // BSC Networks
     bsc: {

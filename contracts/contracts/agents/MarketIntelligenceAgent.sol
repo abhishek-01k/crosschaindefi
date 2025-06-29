@@ -137,7 +137,7 @@ contract MarketIntelligenceAgent is
 
     // Chainlink configuration
     LinkTokenInterface public immutable linkToken;
-    uint64 public immutable subscriptionId;
+    uint256 public immutable subscriptionId;
     bytes32 public immutable donId;
 
     // State variables
@@ -239,7 +239,7 @@ contract MarketIntelligenceAgent is
     constructor(
         address _functionsRouter,
         address _linkToken,
-        uint64 _subscriptionId,
+        uint256 _subscriptionId,
         bytes32 _donId,
         address _hubContract
     ) FunctionsClient(_functionsRouter) {
@@ -583,7 +583,7 @@ contract MarketIntelligenceAgent is
 
         marketAnalyses[requestId].status = AnalysisStatus.IN_PROGRESS;
 
-        _sendRequest(req.encodeCBOR(), subscriptionId, 300000, donId);
+        _sendRequest(req.encodeCBOR(), uint64(subscriptionId), 300000, donId);
     }
 
     function _analyzeProtocolOpportunity(

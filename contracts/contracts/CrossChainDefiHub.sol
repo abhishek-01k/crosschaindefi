@@ -124,7 +124,7 @@ contract CrossChainDefiHub is
     // Chainlink configuration
     LinkTokenInterface public immutable linkToken;
     VRFCoordinatorV2Interface public immutable vrfCoordinator;
-    uint64 public immutable subscriptionId;
+    uint256 public immutable subscriptionId;
     bytes32 public immutable keyHash;
     uint32 public constant CALLBACK_GAS_LIMIT = 100000;
     uint16 public constant REQUEST_CONFIRMATIONS = 3;
@@ -201,7 +201,7 @@ contract CrossChainDefiHub is
         address _linkToken,
         address _functionsRouter,
         address _vrfCoordinator,
-        uint64 _subscriptionId,
+        uint256 _subscriptionId,
         bytes32 _keyHash
     ) 
         CCIPReceiver(_router)

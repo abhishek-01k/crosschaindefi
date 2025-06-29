@@ -1,165 +1,208 @@
 # CrossChainDefi Smart Contracts
 
-## Overview
+AI-powered cross-chain DeFi lending protocol with full Chainlink integration.
 
-CrossChainDefi is a focused cross-chain DeFi lending and borrowing platform powered by AI agents and Chainlink's comprehensive oracle infrastructure. The platform consists of 5 core smart contracts working together to provide seamless cross-chain operations, automated arbitrage, and AI-powered lending optimization strategies.
-
-## Architecture
-
-### Core Protocol Contracts
-
-#### 1. CrossChainDefiHub.sol
-The main protocol hub that coordinates all cross-chain operations, lending/borrowing, and AI agent interactions.
-
-**Key Features:**
-- Cross-chain asset transfers via Chainlink CCIP
-- Lending and borrowing with dynamic interest rates
-- Health factor monitoring and liquidation protection
-- AI-powered credit scoring via Chainlink Functions
-- Protocol governance and fee management
-- Integration with AI agents for coordinated operations
-
-#### 2. CrossChainDepositor.sol
-Handles asset deposits from source chains with automated yield optimization.
-
-**Key Features:**
-- Multi-asset deposit support across supported chains
-- Cross-chain messaging via CCIP to hub
-- Automated yield optimization strategies
-- AI-powered deposit routing and strategy selection
-- Integration with lending protocols for maximum yield
-
-#### 3. CrossChainMinter.sol
-Manages minting and burning of protocol tokens on destination chains with collateral management.
-
-**Key Features:**
-- Cross-chain token minting/burning coordination
-- Multi-collateral support with dynamic ratios
-- Health factor monitoring and liquidation management
-- Automated rebalancing across chains
-- Stability pool and protocol fee management
-
-### AI Agent Contracts
-
-#### 4. ArbitrageCoordinatorAgent.sol
-Orchestrates cross-chain arbitrage opportunities using comprehensive Chainlink services.
-
-**Chainlink Services:**
-- CCIP for cross-chain coordination and execution
-- Data Streams for real-time price feeds
-- Automation for optimal execution timing
-- Functions for ML-powered opportunity analysis
-- VRF for strategy diversification
-
-#### 5. MarketIntelligenceAgent.sol
-Analyzes DeFi lending markets and generates yield optimization insights.
-
-**Chainlink Services:**
-- Data Feeds for lending protocol rates
-- Functions for AI/ML market analysis
-- Automation for continuous market monitoring
-- Cross-chain lending rate analysis and optimization
-
-## Chainlink Services Integration
-
-### 1. CCIP (Cross-Chain Interoperability Protocol)
-- **Purpose**: Secure cross-chain communication and token transfers
-- **Implementation**: All cross-chain operations, programmable token transfers
-- **Contracts**: CrossChainDefiHub, CrossChainDepositor, CrossChainMinter, ArbitrageCoordinatorAgent
-
-### 2. Data Streams
-- **Purpose**: High-frequency, low-latency market data
-- **Implementation**: Real-time price feeds for arbitrage and yield optimization
-- **Contracts**: ArbitrageCoordinatorAgent, MarketIntelligenceAgent
-
-### 3. Functions
-- **Purpose**: Serverless compute for AI/ML operations
-- **Implementation**: Credit scoring, market analysis, lending rate optimization
-- **Contracts**: CrossChainDefiHub, ArbitrageCoordinatorAgent, MarketIntelligenceAgent
-
-### 4. VRF (Verifiable Random Function)
-- **Purpose**: Verifiable randomness for strategy diversification
-- **Implementation**: Random strategy selection, arbitrage timing optimization
-- **Contracts**: ArbitrageCoordinatorAgent
-
-### 5. Automation
-- **Purpose**: Decentralized job scheduling and execution
-- **Implementation**: Automated yield harvesting, rebalancing, liquidations, market monitoring
-- **Contracts**: All 5 core contracts with automated upkeep functionality
-
-### 6. Price Feeds
-- **Purpose**: Reliable asset pricing for all operations
-- **Implementation**: Health factor calculations, liquidations, collateral valuations
-- **Contracts**: CrossChainDefiHub, CrossChainMinter, MarketIntelligenceAgent
-
-## Supported Networks
-
-- Ethereum Mainnet
-- Polygon
-- Arbitrum
-- Optimism
-- Base
-- Avalanche C-Chain
-- BNB Smart Chain
-- Solana (via CCIP integration)
-
-## Security Features
-
-- Multi-signature governance
-- Time-locked administrative functions
-- Health factor monitoring with automated liquidations
-- Circuit breakers for emergency stops
-- Comprehensive audit trails
-- MEV protection mechanisms
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js v18+
-- Hardhat
-- Foundry (optional)
-- Access to Chainlink services
+- Node.js v18+ 
+- Bun or npm
+- Git
+- Test ETH on target networks
 
-### Installation
+### 1. Install Dependencies
 ```bash
+bun install
+# or
 npm install
 ```
 
-### Deployment
+### 2. Environment Setup
 ```bash
-# Deploy to testnet
-npx hardhat run scripts/deploy.js --network sepolia
+# Copy the environment template
+cp .env.example .env
 
-# Deploy to mainnet
-npx hardhat run scripts/deploy.js --network mainnet
+# Edit with your values
+nano .env
 ```
 
-### Configuration
-1. Set up Chainlink service subscriptions
-2. Configure cross-chain selectors
-3. Set up AI agent parameters
-4. Initialize token allowlists
-
-## Testing
-
+### 3. Compile Contracts
 ```bash
-# Run unit tests
-npm test
-
-# Run integration tests
-npm run test:integration
-
-# Run coverage
-npm run coverage
+bun run build
 ```
 
-## Documentation
+### 4. Deploy to Networks
+```bash
+# Deploy to Avalanche Fuji (Hub Chain)
+bun run deploy:fuji
 
-- [Architecture Overview](./docs/ARCHITECTURE.md)
-- [API Documentation](./docs/API.md)
-- [Deployment Guide](./docs/DEPLOYMENT.md)
-- [Security Audit](./docs/SECURITY.md)
+# Deploy to Base Sepolia
+bun run deploy:base-sepolia
 
-## License
+# Deploy to Ethereum Sepolia
+bun run deploy:sepolia
+```
 
-MIT License - see [LICENSE](../LICENSE) file for details. 
+## 🔧 Environment Variables
+
+Create a `.env` file with the following variables:
+
+```env
+# Private Key (Use test key only!)
+PRIVATE_KEY=your_private_key_here
+
+# RPC URLs
+ALCHEMY_API_KEY=your_alchemy_api_key
+
+# Chainlink Subscriptions (Create these first!)
+VRF_SUBSCRIPTION_ID_FUJI=1
+VRF_SUBSCRIPTION_ID_BASE_SEPOLIA=1
+VRF_SUBSCRIPTION_ID_SEPOLIA=1
+
+FUNCTIONS_SUBSCRIPTION_ID_FUJI=1
+FUNCTIONS_SUBSCRIPTION_ID_BASE_SEPOLIA=1
+FUNCTIONS_SUBSCRIPTION_ID_SEPOLIA=1
+
+# API Keys for Verification
+ETHERSCAN_API_KEY=your_etherscan_api_key
+BASESCAN_API_KEY=your_basescan_api_key
+SNOWTRACE_API_KEY=your_snowtrace_api_key
+```
+
+## 📋 Pre-Deployment Checklist
+
+### 1. Fund Your Wallet
+Ensure you have testnet ETH on:
+- ✅ Avalanche Fuji
+- ✅ Base Sepolia  
+- ✅ Ethereum Sepolia
+
+### 2. Create Chainlink Subscriptions
+
+#### VRF Subscriptions
+Visit [Chainlink VRF Dashboard](https://vrf.chain.link/) and create subscriptions for:
+- Avalanche Fuji
+- Base Sepolia
+- Ethereum Sepolia
+
+#### Functions Subscriptions
+Visit [Chainlink Functions Dashboard](https://functions.chain.link/) and create subscriptions for:
+- Avalanche Fuji
+- Base Sepolia
+- Ethereum Sepolia
+
+## 🚀 Deployment Commands
+
+```bash
+# Deploy to specific networks
+bun run deploy:fuji           # Avalanche Fuji (Hub)
+bun run deploy:base-sepolia   # Base Sepolia
+bun run deploy:sepolia        # Ethereum Sepolia
+
+# Deploy to all networks
+bun run deploy:all
+
+# Verify contracts
+bun run verify:fuji
+bun run verify:base-sepolia
+bun run verify:sepolia
+```
+
+## 📊 Contract Architecture
+
+### Core Contracts
+1. **CrossChainDefiHub** - Main protocol coordinator
+2. **CrossChainDepositor** - Handles deposits and yield strategies
+3. **CrossChainMinter** - Manages token minting/burning
+4. **ArbitrageCoordinatorAgent** - AI-powered arbitrage execution
+5. **MarketIntelligenceAgent** - Market analysis and yield optimization
+
+### Chainlink Integrations
+- **CCIP** - Cross-chain messaging
+- **Functions** - AI/ML computations
+- **Data Feeds** - Price oracles
+- **VRF** - Randomness for strategies
+- **Automation** - Automated maintenance
+
+## 🔍 Post-Deployment Setup
+
+After successful deployment, you need to:
+
+### 1. Fund VRF Subscriptions
+```bash
+# Visit VRF dashboard and add LINK tokens
+# Add deployed contracts as consumers
+```
+
+### 2. Configure Functions
+```bash
+# Upload Functions source code
+# Add contracts as authorized consumers
+```
+
+### 3. Set Up Price Feeds
+```bash
+# Configure supported tokens
+# Set price feed addresses
+```
+
+### 4. Configure Cross-Chain Settings
+```bash
+# Set allowed chains
+# Configure CCIP settings
+```
+
+## 📁 Deployment Artifacts
+
+After deployment, check the `deployments/` folder for:
+- Contract addresses
+- Constructor parameters
+- Network configurations
+- Verification status
+
+## 🛠️ Development
+
+### Run Tests
+```bash
+bun run test
+```
+
+### Coverage Report
+```bash
+bun run coverage
+```
+
+### Contract Size Analysis
+```bash
+bun run size
+```
+
+### Security Analysis
+```bash
+bun run analyze
+```
+
+## 🔒 Security
+
+- All contracts use OpenZeppelin libraries
+- Access control with role-based permissions
+- Reentrancy protection
+- Pausable emergency mechanisms
+
+## 📚 Documentation
+
+- [Chainlink CCIP Docs](https://docs.chain.link/ccip)
+- [Chainlink Functions Docs](https://docs.chain.link/chainlink-functions)
+- [Chainlink VRF Docs](https://docs.chain.link/vrf)
+
+## 🤝 Support
+
+If you encounter issues:
+1. Check the deployment logs
+2. Verify environment variables
+3. Ensure sufficient testnet funds
+4. Check Chainlink subscription status
+
+## 📄 License
+
+MIT License - see LICENSE file for details. 
