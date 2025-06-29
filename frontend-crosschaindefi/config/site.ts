@@ -11,22 +11,6 @@ export const siteConfig = {
       title: "Dashboard",
       href: "/dashboard",
     },
-    {
-      title: "Lending",
-      href: "/lending",
-    },
-    {
-      title: "Borrowing", 
-      href: "/borrowing",
-    },
-    {
-      title: "Portfolio",
-      href: "/portfolio",
-    },
-    {
-      title: "Analytics",
-      href: "/analytics",
-    },
   ],
   features: [
     {
