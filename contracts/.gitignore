@@ -15,7 +15,7 @@ cache
 cache/
 
 # Ignore all files in the artifacts directory
-artifacts/
+artifacts
 
 # Ignore all files in the cache directory
 cache/
