@@ -13,10 +13,10 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { AlertCircle, TrendingUp, DollarSign, Shield, Zap, RefreshCw } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import {
-  useProtocolContracts,
-  useUserProfile,
-  useProtocolStats,
+import { 
+  useProtocolContracts, 
+  useUserProfile, 
+  useProtocolStats, 
   useTokenBalance,
   useTokenAllowance,
   useApproval,
@@ -30,7 +30,6 @@ import {
 } from '@/lib/hooks'
 import { StrategyType } from '@/lib/abis'
 import { supportedChains } from '@/lib/web3'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 // Mock token addresses for testnets
 export const TESTNET_TOKENS = {
@@ -62,7 +61,7 @@ export default function LendingDashboard() {
   const chainId = useChainId()
   const { switchChain } = useSwitchChain()
   const { contracts, isHub } = useProtocolContracts()
-
+  
   // Component state
   const [activeTab, setActiveTab] = useState('lend')
   const [selectedToken, setSelectedToken] = useState('USDC')
@@ -74,19 +73,19 @@ export default function LendingDashboard() {
   // Get user data
   const { profile, isLoading: profileLoading } = useUserProfile()
   const { hubStats, depositorStats, minterStats, isLoading: statsLoading } = useProtocolStats()
-
+  
   // Get token addresses for current chain
   const tokens = TESTNET_TOKENS[chainId as keyof typeof TESTNET_TOKENS] || TESTNET_TOKENS[43113]
   const selectedTokenAddress = tokens[selectedToken as keyof typeof tokens]
-
+  
   // Token data
   const { balance, symbol, decimals, formatted: tokenBalance } = useTokenBalance(selectedTokenAddress)
   const { deposits, borrowed, depositorBalance } = useUserBalances(selectedTokenAddress)
   const { allowance } = useTokenAllowance(
-    selectedTokenAddress,
+    selectedTokenAddress, 
     isHub ? contracts?.crossChainDefiHub || '' : contracts?.crossChainDepositor || ''
   )
-
+  
   // Contract operations
   const { approve, isPending: approvalPending, isSuccess: approvalSuccess } = useApproval()
   const { deposit, isPending: depositPending, isSuccess: depositSuccess } = useDeposit()
@@ -96,14 +95,14 @@ export default function LendingDashboard() {
   const { mint, isPending: mintPending, isSuccess: mintSuccess } = useMint()
 
   // Calculate if approval is needed
-  const needsApproval = allowance && amount ?
-    parseUnits(amount, decimals || 18) > allowance :
+  const needsApproval = allowance && amount ? 
+    parseUnits(amount, decimals || 18) > allowance : 
     true
 
   // Handle approval
   const handleApproval = async () => {
     if (!selectedTokenAddress || !amount) return
-
+    
     const spenderAddress = isHub ? contracts?.crossChainDefiHub : contracts?.crossChainDepositor
     if (!spenderAddress) return
 
@@ -206,12 +205,12 @@ export default function LendingDashboard() {
             <CardTitle className="text-center">Connect Your Wallet</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='flex flex-col items-center justify-center'>
-              <p className="text-muted-foreground mb-4 text-center">
-                Please connect your wallet to access the CrossChain DeFi platform
-              </p>
-              <ConnectButton />
-            </div>
+            <p className="text-center text-muted-foreground mb-4">
+              Please connect your wallet to access the CrossChain DeFi platform
+            </p>
+            <Button className="w-full" onClick={() => {/* Connect wallet logic */}}>
+              Connect Wallet
+            </Button>
           </CardContent>
         </Card>
       </div>
@@ -228,7 +227,7 @@ export default function LendingDashboard() {
             Lend, borrow, and earn across multiple blockchains
           </p>
         </div>
-
+        
         <div className="flex items-center gap-2">
           <Badge variant={isHub ? 'default' : 'secondary'}>
             {isHub ? 'Hub Chain' : 'Spoke Chain'}
@@ -237,6 +236,65 @@ export default function LendingDashboard() {
             {supportedChains.find(chain => chain.id === chainId)?.name || 'Unknown Chain'}
           </Badge>
         </div>
+      </div>
+
+      {/* Protocol Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Value Locked</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              ${depositorStats ? formatUnits(depositorStats[0], 18) : '0.00'}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              +20.1% from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Borrowed</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              ${hubStats ? formatUnits(hubStats[1], 18) : '0.00'}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              +12.5% from last month
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Utilization Rate</CardTitle>
+            <Zap className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{getUtilizationRate().toFixed(1)}%</div>
+            <Progress value={getUtilizationRate()} className="mt-2" />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Health Factor</CardTitle>
+            <Shield className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className={`text-2xl font-bold ${getHealthFactorColor(profile?.[0])}`}>
+              {profile ? Number(formatUnits(profile[0], 18)).toFixed(2) : 'N/A'}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {profile && Number(formatUnits(profile[0], 18)) >= 1.5 ? 'Healthy' : 'At Risk'}
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Main Interface */}
@@ -295,8 +353,8 @@ export default function LendingDashboard() {
                   {activeTab === 'lend' && !isHub && (
                     <div className="space-y-2">
                       <Label htmlFor="strategy">Yield Strategy</Label>
-                      <Select
-                        value={selectedStrategy.toString()}
+                      <Select 
+                        value={selectedStrategy.toString()} 
                         onValueChange={(value) => setSelectedStrategy(Number(value) as StrategyType)}
                       >
                         <SelectTrigger>
@@ -335,7 +393,7 @@ export default function LendingDashboard() {
                     <Alert>
                       <AlertCircle className="h-4 w-4" />
                       <AlertDescription>
-                        {isHub
+                        {isHub 
                           ? "Deposit tokens to earn yield and provide liquidity for borrowers"
                           : "Deposit tokens to earn optimized yield across DeFi protocols"
                         }
@@ -344,7 +402,7 @@ export default function LendingDashboard() {
 
                     <div className="flex gap-2">
                       {needsApproval && (
-                        <Button
+                        <Button 
                           onClick={handleApproval}
                           disabled={approvalPending || !amount}
                           className="flex-1"
@@ -353,8 +411,8 @@ export default function LendingDashboard() {
                           Approve {selectedToken}
                         </Button>
                       )}
-
-                      <Button
+                      
+                      <Button 
                         onClick={handleDeposit}
                         disabled={depositPending || needsApproval || !amount}
                         className="flex-1"
@@ -375,7 +433,7 @@ export default function LendingDashboard() {
                       </AlertDescription>
                     </Alert>
 
-                    <Button
+                    <Button 
                       onClick={handleBorrow}
                       disabled={borrowPending || !amount}
                       className="w-full"
@@ -397,7 +455,7 @@ export default function LendingDashboard() {
 
                     <div className="flex gap-2">
                       {needsApproval && (
-                        <Button
+                        <Button 
                           onClick={handleApproval}
                           disabled={approvalPending || !amount}
                           className="flex-1"
@@ -406,8 +464,8 @@ export default function LendingDashboard() {
                           Approve {selectedToken}
                         </Button>
                       )}
-
-                      <Button
+                      
+                      <Button 
                         onClick={handleRepay}
                         disabled={repayPending || needsApproval || !amount}
                         className="flex-1"
@@ -430,7 +488,7 @@ export default function LendingDashboard() {
 
                     <div className="flex gap-2">
                       {needsApproval && (
-                        <Button
+                        <Button 
                           onClick={handleApproval}
                           disabled={approvalPending || !amount}
                           className="flex-1"
@@ -439,8 +497,8 @@ export default function LendingDashboard() {
                           Approve {selectedToken}
                         </Button>
                       )}
-
-                      <Button
+                      
+                      <Button 
                         onClick={handleMint}
                         disabled={mintPending || needsApproval || !amount}
                         className="flex-1"
@@ -461,7 +519,7 @@ export default function LendingDashboard() {
                       </AlertDescription>
                     </Alert>
 
-                    <Button
+                    <Button 
                       onClick={handleWithdraw}
                       disabled={withdrawPending || !amount}
                       className="w-full"
@@ -486,7 +544,7 @@ export default function LendingDashboard() {
               <div>
                 <Label className="text-sm font-medium">Deposited {selectedToken}</Label>
                 <p className="text-2xl font-bold">
-                  {isHub
+                  {isHub 
                     ? (deposits ? formatUnits(deposits, decimals || 18) : '0.00')
                     : (depositorBalance ? formatUnits(depositorBalance, decimals || 18) : '0.00')
                   }

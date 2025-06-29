@@ -98,19 +98,6 @@ const agents = [
     capabilities: ['Random Generation', 'Strategy Diversification', 'A/B Testing', 'Portfolio Rebalancing'],
     chainlinkServices: ['VRF', 'Automation', 'Functions'],
   },
-  {
-    id: 7,
-    name: 'Treasury Agent',
-    description: 'Manages multi-chain portfolio, risk assessment, and treasury operations',
-    icon: Shield,
-    status: 'Active',
-    performance: '+21.8%',
-    successRate: 93,
-    trades: '1,789',
-    volume: '$4.1M',
-    capabilities: ['Portfolio Management', 'Risk Assessment', 'Asset Allocation', 'Performance Tracking'],
-    chainlinkServices: ['Data Feeds', 'Functions', 'Automation'],
-  },
 ]
 
 const container = {
@@ -150,7 +137,7 @@ export function AgentsSection() {
           transition={{ duration: 0.5, delay: 0.1 }}
           viewport={{ once: true }}
         >
-          7 Autonomous AI Agents
+          6 Autonomous AI Agents
         </motion.h2>
 
         <motion.p
@@ -269,7 +256,7 @@ export function AgentsSection() {
           <CardHeader>
             <CardTitle className="text-center">AI Agent Performance Overview</CardTitle>
             <CardDescription className="text-center">
-              Combined metrics from all 7 autonomous agents
+              Combined metrics from all 6 autonomous agents
             </CardDescription>
           </CardHeader>
           <CardContent>

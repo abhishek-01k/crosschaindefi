@@ -23,7 +23,7 @@ import { BorrowingSection } from "@/components/borrowing-section"
 import { CrossChainSection } from "@/components/cross-chain-section"
 import { AgentsSection } from "@/components/agents-section"
 import { TradingSection } from "@/components/trading-section"
-import { PredictionMarketsSection } from "@/components/prediction-markets-section"
+// import { PredictionMarketsSection } from "@/components/prediction-markets-section"
 import { PartnersSection } from "@/components/partners-section"
 import { StatsSection } from "@/components/stats-section"
 import { TestimonialsSection } from "@/components/testimonials-section"
@@ -199,7 +199,7 @@ export default function HomePage() {
       <CrossChainSection />
       <AgentsSection />
       <TradingSection />
-      <PredictionMarketsSection />
+      {/* <PredictionMarketsSection /> */}
       <StatsSection />
       <PartnersSection />
       <TestimonialsSection />
