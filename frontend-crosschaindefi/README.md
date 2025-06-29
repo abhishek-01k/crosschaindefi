@@ -25,12 +25,12 @@
 
 1. **Clone the repository**:
    ```bash
-   cd BuckyFinance/frontend-crosschaindefi
+   git clone and cd into the dir
    ```
 
 2. **Install dependencies**:
    ```bash
-   npm install
+   bun install
    ```
 
 3. **Set up environment variables**:

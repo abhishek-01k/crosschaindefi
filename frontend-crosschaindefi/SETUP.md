@@ -15,7 +15,7 @@ Before you begin, ensure you have the following installed:
 Navigate to the frontend directory and install all required dependencies:
 
 ```bash
-cd BuckyFinance/frontend-crosschaindefi
+git clone and cd into the dir
 npm install
 ```
 
@@ -40,7 +40,7 @@ This will install all the dependencies listed in `package.json`, including:
 
    ### Essential Configuration
    ```bash
-   # Application
+# Application
    NEXT_PUBLIC_APP_NAME="CrossChainDefi"
    NEXT_PUBLIC_APP_URL="http://localhost:3000"
    NEXT_PUBLIC_APP_ENV="development"
