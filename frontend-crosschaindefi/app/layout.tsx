@@ -12,7 +12,10 @@ import { Toaster } from "@/components/ui/toaster"
 
 import "@/styles/globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+export const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -77,8 +80,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          inter.className
+          inter.variable,
+          "min-h-screen bg-background antialiased",
         )}
       >
         <ThemeProvider

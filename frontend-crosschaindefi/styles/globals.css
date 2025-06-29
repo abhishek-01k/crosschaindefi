@@ -53,8 +53,10 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter);
   }
 }
 
@@ -85,9 +87,12 @@
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -97,6 +102,7 @@
   from {
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
   }
+
   to {
     box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
   }
