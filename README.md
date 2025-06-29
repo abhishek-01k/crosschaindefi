@@ -150,11 +150,11 @@ graph TB
     CCIP --> BASE
     CCIP --> OPT
 
-    style HUB fill:#ff6b6b
-    style ACA fill:#4ecdc4
-    style MIA fill:#45b7d1
-    style CCIP fill:#f39c12
-    style AUTO_CL fill:#95a5a6
+    style HUB fill:#c0392b,color:#ffffff
+    style ACA fill:#16a085,color:#ffffff
+    style MIA fill:#2980b9,color:#ffffff
+    style CCIP fill:#d35400,color:#ffffff
+    style AUTO_CL fill:#7f8c8d,color:#ffffff
 ```
 
 ### Cross-Chain Flow
@@ -227,8 +227,8 @@ graph LR
     SCORE --> RATE
     SCORE --> LIMIT
 
-    style ML fill:#e74c3c
-    style SCORE fill:#27ae60
+    style ML fill:#b71c1c,color:#ffffff
+    style SCORE fill:#1b5e20,color:#ffffff
 ```
 
 ---
@@ -346,9 +346,9 @@ graph TD
     DEPOSITOR --> AUTOMATION
     MINTER --> AUTOMATION
 
-    style HUB fill:#ff6b6b
-    style ARBITRAGE fill:#4ecdc4
-    style INTELLIGENCE fill:#45b7d1
+    style HUB fill:#c0392b,color:#ffffff
+    style ARBITRAGE fill:#16a085,color:#ffffff
+    style INTELLIGENCE fill:#2980b9,color:#ffffff
 ```
 
 ---
