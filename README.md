@@ -94,16 +94,14 @@ graph TB
     end
 
     subgraph "AI Agent Layer"
-        ACA[Arbitrage Coordinator]
+        ACA[Arbitrage Coordinator Agent]
         MIA[Market Intelligence Agent]
-        TRA[Treasury Agent]
-        AUTO[Automation Agent]
     end
 
     subgraph "Core Protocol"
-        HUB[CrossChain DefiHub<br/>Main Router]
-        DEP[CrossChain Depositor]
-        MINT[CrossChain Minter]
+        HUB[CrossChain DefiHub<br/>Main Router & Coordinator]
+        DEP[CrossChain Depositor<br/>with Yield Strategies]
+        MINT[CrossChain Minter<br/>with Collateral Management]
     end
 
     subgraph "Chainlink Services"
@@ -111,7 +109,7 @@ graph TB
         FUNC[Functions AI/ML]
         FEED[Data Feeds]
         VRF[VRF Randomness]
-        AUTO_CL[Automation]
+        AUTO_CL[Automation<br/>Built into each contract]
     end
 
     subgraph "Supported Chains"
@@ -129,8 +127,10 @@ graph TB
 
     ACA --> HUB
     MIA --> HUB
-    TRA --> HUB
-    AUTO --> HUB
+    ACA --> FUNC
+    ACA --> VRF
+    MIA --> FUNC
+    MIA --> FEED
 
     HUB --> CCIP
     HUB --> FUNC
@@ -139,7 +139,9 @@ graph TB
     HUB --> AUTO_CL
 
     DEP --> CCIP
+    DEP --> AUTO_CL
     MINT --> CCIP
+    MINT --> AUTO_CL
 
     CCIP --> ETH
     CCIP --> AVAX
@@ -152,6 +154,7 @@ graph TB
     style ACA fill:#4ecdc4
     style MIA fill:#45b7d1
     style CCIP fill:#f39c12
+    style AUTO_CL fill:#95a5a6
 ```
 
 ### Cross-Chain Flow
@@ -281,18 +284,20 @@ function liquidatePosition(address user, address collateralToken, uint256 maxAmo
 ### AI Agent Contracts
 
 #### 4. ArbitrageCoordinatorAgent.sol
-**Role**: AI-powered arbitrage opportunity detection and execution
-- Cross-chain rate monitoring
-- ML-based opportunity prediction
-- Automated execution strategies
-- Risk-adjusted profit optimization
+**Role**: AI-powered cross-chain arbitrage coordination
+- Cross-chain rate monitoring via CCIP messaging
+- ML-based opportunity prediction using Chainlink Functions
+- Automated execution strategies with VRF for diversification
+- Risk-adjusted profit optimization and real-time price analysis
+- Integration with all Chainlink services (CCIP, Functions, Data Feeds, VRF, Automation)
 
 #### 5. MarketIntelligenceAgent.sol
-**Role**: DeFi market analysis and yield optimization
-- Real-time lending rate analysis
-- Protocol performance monitoring
-- Yield opportunity detection
-- Market trend prediction
+**Role**: DeFi market analysis and yield optimization across chains
+- Real-time lending rate analysis using Chainlink Functions for external API integration
+- Protocol performance monitoring across multiple DeFi protocols (Aave, Compound, Venus, etc.)
+- Cross-chain yield opportunity detection and arbitrage analysis
+- Market trend prediction and automated rate updates via Chainlink Automation
+- Comprehensive lending protocol tracking and risk assessment
 
 ### Contract Interactions
 ```mermaid
@@ -351,22 +356,31 @@ graph TD
 ## 🤖 AI Agent Integration
 
 ### Arbitrage Coordinator Agent
-- **Real-time Monitoring**: Continuous scanning of lending rates across all chains
-- **ML Predictions**: AI models predict optimal execution timing
-- **Risk Assessment**: Dynamic evaluation of arbitrage risks and rewards
-- **Automated Execution**: Smart contract-based arbitrage execution
+- **Cross-Chain Arbitrage Detection**: Continuous scanning of lending rates across all supported chains
+- **ML-Powered Predictions**: Uses Chainlink Functions for AI/ML computations to predict optimal execution timing
+- **Risk Assessment**: Dynamic evaluation of arbitrage risks and rewards using VRF for strategy diversification
+- **Automated Execution**: Smart contract-based arbitrage execution with cross-chain messaging via CCIP
+- **Real-time Price Monitoring**: Integration with Chainlink Data Feeds for accurate pricing data
 
 ### Market Intelligence Agent
-- **Protocol Analysis**: Deep analysis of lending protocols (Aave, Compound, Venus, etc.)
-- **Yield Optimization**: AI-driven yield farming strategies
-- **Market Insights**: Real-time market condition analysis
-- **Opportunity Detection**: Identification of high-yield opportunities
+- **Protocol Analysis**: Deep analysis of lending protocols (Aave, Compound, Venus, Benqi, etc.) across all chains
+- **Yield Optimization**: AI-driven yield farming strategies using Chainlink Functions for external API integration
+- **Market Insights**: Real-time market condition analysis and lending rate comparisons
+- **Opportunity Detection**: Identification of high-yield opportunities and cross-chain rate arbitrage
+- **Automated Rate Updates**: Uses Chainlink Automation for regular protocol rate monitoring
+
+### Built-in Automation
+- **Smart Contract Automation**: Each core contract integrates Chainlink Automation directly
+- **Automated Maintenance**: Regular protocol upkeep, liquidation checks, and yield compounding
+- **Cross-Chain Coordination**: Automated cross-chain message processing and token transfers
+- **Portfolio Rebalancing**: Automatic optimization of asset allocation across chains
 
 ### Integration Benefits
-- **24/7 Monitoring**: Continuous market surveillance
-- **Millisecond Execution**: Rapid opportunity capture
-- **Risk Minimization**: AI-powered risk assessment
-- **Profit Maximization**: Optimal strategy selection
+- **24/7 Monitoring**: Continuous market surveillance across all supported chains
+- **Millisecond Execution**: Rapid opportunity capture with minimal latency
+- **Risk Minimization**: AI-powered risk assessment and automated safeguards
+- **Profit Maximization**: Optimal strategy selection based on real-time market analysis
+- **Cross-Chain Intelligence**: Unified view of opportunities across the entire DeFi ecosystem
 
 ---
 
