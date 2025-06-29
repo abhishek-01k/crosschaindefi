@@ -1,0 +1,38 @@
+{
+  "network": "baseSepolia",
+  "chainId": 84532,
+  "timestamp": "2025-06-29T11:17:39.097Z",
+  "deployer": "0x575E1D9DB08388356ceb2e91C8e30B4E24664a62",
+  "deploymentType": "spoke",
+  "hubChain": "fuji",
+  "hubAddress": "0x2519bA8D5f7F64fACC712abc32195FA3a53c02ab",
+  "chainlinkConfig": {
+    "router": "0xD3b06cEbF099CE7DA4AcCf578aaebFDBd6e88a93",
+    "linkToken": "0xE4aB69C077896252FAFBD49EFD26B5D171A32410",
+    "functionsRouter": "0xf9B8fc078197181C841c296C876945aaa425B278",
+    "vrfCoordinator": "0x5CE8D5A2BC84beb22a398CCA51996F7930313D61",
+    "keyHash": "0x816bedba8a50b294e5cbd47842baf240c2385f2eaf719edbd4f250a137a8c899",
+    "automationRegistry": "0xE16Df59B887e3Caa439E0b29B42bA2e7976FD8b2",
+    "chainSelector": "10344971235874465080",
+    "donId": "fun-base-sepolia-1"
+  },
+  "protocolConfig": {
+    "LIQUIDATION_THRESHOLD": 80,
+    "HEALTH_FACTOR_THRESHOLD": 110,
+    "MAX_UTILIZATION_RATE": 90,
+    "PROTOCOL_FEE": 100,
+    "LIQUIDATION_FEE": 500,
+    "MIN_DEPOSIT_AMOUNT": "1000000",
+    "MAX_DEPOSIT_AMOUNT": "1000000000000000000000000",
+    "YIELD_COMPOUND_INTERVAL": 86400,
+    "STRATEGY_REBALANCE_INTERVAL": 604800,
+    "PRECISION": "1000000000000000000"
+  },
+  "contracts": {
+    "CrossChainDepositor": "0x2c58f9388470Cef9C163d40470BDcE62C0d9888e",
+    "CrossChainMinter": "0xB16c17578917fac80fEA345ee76021204cd07C34"
+  },
+  "gasUsed": {
+    "estimated": "~4,000,000 gas total (spoke contracts)"
+  }
+}

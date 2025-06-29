@@ -1,0 +1,48 @@
+{
+  "network": "fuji",
+  "chainId": 43113,
+  "timestamp": "2025-06-29T09:08:56.283Z",
+  "deployer": "0x575E1D9DB08388356ceb2e91C8e30B4E24664a62",
+  "chainlinkConfig": {
+    "router": "0xF694E193200268f9a4868e4Aa017A0118C9a8177",
+    "linkToken": "0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846",
+    "functionsRouter": "0xA9d587a00A31A52Ed70D6026794a8FC5E2F5dCb0",
+    "vrfCoordinator": "0x2eD832Ba664535e5886b75D64C46EB9a228C2610",
+    "keyHash": "0x354d2f95da55398f44b7cff77da56283d9c6c829a4bdf1bbcaf2ad6a4d081f61",
+    "automationRegistry": "0x819B58A646CDd8289275A87653a2aA4902b14fe6",
+    "chainSelector": "14767482510784806043",
+    "donId": "fun-avalanche-fuji-1"
+  },
+  "vrfConfig": {
+    "subscriptionId": "31401000350673290672175237457446216809417990730421101511613179758917958081593",
+    "callbackGasLimit": 100000,
+    "requestConfirmations": 3,
+    "numWords": 1
+  },
+  "functionsConfig": {
+    "subscriptionId": "15697",
+    "gasLimit": 300000
+  },
+  "protocolConfig": {
+    "LIQUIDATION_THRESHOLD": 80,
+    "HEALTH_FACTOR_THRESHOLD": 110,
+    "MAX_UTILIZATION_RATE": 90,
+    "PROTOCOL_FEE": 100,
+    "LIQUIDATION_FEE": 500,
+    "MIN_DEPOSIT_AMOUNT": "1000000",
+    "MAX_DEPOSIT_AMOUNT": "1000000000000000000000000",
+    "YIELD_COMPOUND_INTERVAL": 86400,
+    "STRATEGY_REBALANCE_INTERVAL": 604800,
+    "PRECISION": "1000000000000000000"
+  },
+  "contracts": {
+    "CrossChainDefiHub": "0x2519bA8D5f7F64fACC712abc32195FA3a53c02ab",
+    "CrossChainDepositor": "0x56Ece20263898124295378c5b8EEf367fE3AC76F",
+    "CrossChainMinter": "0x51d328e6F439eaE6f2BEc120F6F6313fbf50119A",
+    "ArbitrageCoordinatorAgent": "0xD103937FEaf0DF4c8ADD4fe28Cfc7830B66DF919",
+    "MarketIntelligenceAgent": "0xB7F02024F2B8F3050440D2191f290eF635236520"
+  },
+  "gasUsed": {
+    "estimated": "~12,000,000 gas total"
+  }
+}
