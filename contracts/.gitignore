@@ -1,0 +1,21 @@
+node_modules
+.env
+.DS_Store
+.idea
+.vscode
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+
+cache
+
+# Ignore all files in the cache directory
+cache/
+
+# Ignore all files in the artifacts directory
+artifacts/
+
+# Ignore all files in the cache directory
+cache/

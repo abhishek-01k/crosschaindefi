@@ -6,7 +6,7 @@ import {Client} from "@chainlink/contracts-ccip/contracts/libraries/Client.sol";
 import {IRouterClient} from "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol";
 import {OwnerIsCreator} from "@chainlink/contracts/src/v0.8/shared/access/OwnerIsCreator.sol";
 import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol";
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import {AutomationCompatibleInterface} from "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -32,6 +32,10 @@ contract CrossChainMinter is
     Pausable,
     AccessControl
 {
+    // Override supportsInterface to resolve conflicts between CCIPReceiver and AccessControl
+    function supportsInterface(bytes4 interfaceId) public view virtual override(CCIPReceiver, AccessControl) returns (bool) {
+        return CCIPReceiver.supportsInterface(interfaceId) || AccessControl.supportsInterface(interfaceId);
+    }
     using SafeERC20 for IERC20;
 
     // Role definitions
@@ -529,11 +533,12 @@ contract CrossChainMinter is
     ) internal view returns (uint256) {
         UserPosition storage position = userPositions[user];
         
-        uint256 totalCollateralValue = _getCollateralValue(collateralToken, collateralAmount);
+        uint256 currentCollateralValue = _getCollateralValue(collateralToken, collateralAmount);
+        uint256 localTotalCollateralValue = currentCollateralValue;
         for (uint256 i = 0; i < collateralTokens.length; i++) {
             address token = collateralTokens[i];
             if (token != collateralToken) {
-                totalCollateralValue += _getCollateralValue(token, position.collateralBalances[token]);
+                localTotalCollateralValue += _getCollateralValue(token, position.collateralBalances[token]);
             }
         }
         
@@ -541,21 +546,21 @@ contract CrossChainMinter is
         
         if (totalDebt == 0) return type(uint256).max;
         
-        return (totalCollateralValue * MIN_HEALTH_FACTOR * PRECISION) / (totalDebt * 100);
+        return (localTotalCollateralValue * MIN_HEALTH_FACTOR * PRECISION) / (totalDebt * 100);
     }
 
     function _calculateCurrentHealthFactor(address user) internal view returns (uint256) {
         UserPosition storage position = userPositions[user];
         
-        uint256 totalCollateralValue = 0;
+        uint256 currentCollateralValue = 0;
         for (uint256 i = 0; i < collateralTokens.length; i++) {
             address token = collateralTokens[i];
-            totalCollateralValue += _getCollateralValue(token, position.collateralBalances[token]);
+            currentCollateralValue += _getCollateralValue(token, position.collateralBalances[token]);
         }
         
         if (position.totalMinted == 0) return type(uint256).max;
         
-        return (totalCollateralValue * MIN_HEALTH_FACTOR * PRECISION) / (position.totalMinted * 100);
+        return (currentCollateralValue * MIN_HEALTH_FACTOR * PRECISION) / (position.totalMinted * 100);
     }
 
     function _calculateHealthFactorAfterBurn(
@@ -566,20 +571,20 @@ contract CrossChainMinter is
     ) internal view returns (uint256) {
         UserPosition storage position = userPositions[user];
         
-        uint256 totalCollateralValue = 0;
+        uint256 afterBurnCollateralValue = 0;
         for (uint256 i = 0; i < collateralTokens.length; i++) {
             address token = collateralTokens[i];
             uint256 balance = position.collateralBalances[token];
             if (token == collateralToken) {
                 balance -= collateralAmount;
             }
-            totalCollateralValue += _getCollateralValue(token, balance);
+            afterBurnCollateralValue += _getCollateralValue(token, balance);
         }
         
         uint256 remainingDebt = position.totalMinted - burnAmount;
         if (remainingDebt == 0) return type(uint256).max;
         
-        return (totalCollateralValue * MIN_HEALTH_FACTOR * PRECISION) / (remainingDebt * 100);
+        return (afterBurnCollateralValue * MIN_HEALTH_FACTOR * PRECISION) / (remainingDebt * 100);
     }
 
     function _getCollateralValue(address token, uint256 amount) internal view returns (uint256) {

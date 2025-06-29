@@ -6,7 +6,7 @@ import {Client} from "@chainlink/contracts-ccip/contracts/libraries/Client.sol";
 import {IRouterClient} from "@chainlink/contracts-ccip/contracts/interfaces/IRouterClient.sol";
 import {OwnerIsCreator} from "@chainlink/contracts/src/v0.8/shared/access/OwnerIsCreator.sol";
 import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol";
-import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import {AutomationCompatibleInterface} from "@chainlink/contracts/src/v0.8/automation/AutomationCompatible.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -28,6 +28,10 @@ contract CrossChainDepositor is
     Pausable,
     AccessControl
 {
+    // Override supportsInterface to resolve conflicts between CCIPReceiver and AccessControl
+    function supportsInterface(bytes4 interfaceId) public view virtual override(CCIPReceiver, AccessControl) returns (bool) {
+        return CCIPReceiver.supportsInterface(interfaceId) || AccessControl.supportsInterface(interfaceId);
+    }
     using SafeERC20 for IERC20;
 
     // Role definitions
@@ -474,7 +478,7 @@ contract CrossChainDepositor is
             data: abi.encode(MessageType.DEPOSIT, abi.encode(depositId, user, token, amount)),
             tokenAmounts: tokenAmounts,
             extraArgs: Client._argsToBytes(
-                Client.EVMExtraArgsV1({gasLimit: 300_000, strict: false})
+                Client.EVMExtraArgsV1({gasLimit: 300_000})
             ),
             feeToken: address(linkToken)
         });
@@ -508,7 +512,7 @@ contract CrossChainDepositor is
             data: abi.encode(MessageType.WITHDRAW, abi.encode(user, token, amount)),
             tokenAmounts: new Client.EVMTokenAmount[](0),
             extraArgs: Client._argsToBytes(
-                Client.EVMExtraArgsV1({gasLimit: 200_000, strict: false})
+                Client.EVMExtraArgsV1({gasLimit: 200_000})
             ),
             feeToken: address(linkToken)
         });

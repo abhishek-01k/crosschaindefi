@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "CBOR",
+  "sourceName": "@chainlink/contracts/src/v0.8/vendor/solidity-cborutils/v2.0.0/CBOR.sol",
+  "abi": [],
+  "bytecode": "0x60808060405234601757603a9081601d823930815050f35b600080fdfe600080fdfea2646970667358221220d016c17d610e870459d0e88c87f8146c5f51e7543d84674866f22474318aaf7664736f6c63430008140033",
+  "deployedBytecode": "0x600080fdfea2646970667358221220d016c17d610e870459d0e88c87f8146c5f51e7543d84674866f22474318aaf7664736f6c63430008140033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
